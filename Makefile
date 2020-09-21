@@ -16,3 +16,5 @@ release:
 	  '(builtins.toString (builtins.isAttrs ((import ./release.nix {}).nix-lib.shComp.env)))'
 	nix eval --show-trace --raw \
 	  '(builtins.toString (builtins.isAttrs ((import ./release.nix {}).nix-lib.shComp.pkg)))'
+	nix eval --show-trace --raw \
+	  '(builtins.toString (builtins.isAttrs ((import ./release.nix {}).nix-lib.shComp.shell)))'
