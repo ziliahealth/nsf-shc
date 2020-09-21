@@ -10,5 +10,6 @@ in
   shComp = {
     env = callPackage ./env.nix {};
     pkg = callPackage ./pkg.nix {};
+    shell = callPackage ./shell.nix {};
   };
 }
