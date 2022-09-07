@@ -10,6 +10,7 @@
     mkdir -p "$bash_completion_dir"
     for e in "''${click_exes[@]}"; do
       click_exe_path="$out/bin/$e"
+      wrapProgram "$click_exe_path" --prefix PATH ':' "$program_PATH"
       click_complete_env_var_name="_$(echo "$e" | tr "[a-z-]" "[A-Z_]")_COMPLETE"
       # TODO: For some reason, running this return a non zero (1) status code. This might
       # be a click library bug. Fill one if so.
