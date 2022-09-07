@@ -1,13 +1,7 @@
-{ pkgs ? null } @ args:
+{ pkgs ? (import ./.nix/pinned-nixpkgs.nix { }) }:
 
 let
-  pkgs = (import ./.nix/release.nix {}).ensurePkgs args;
-in
-
-with pkgs;
-
-let
-  nix-lib = pkgs.callPackage ./nix-lib {};
+  nix-lib = pkgs.callPackage ./nix-lib { };
 in
 
 {
