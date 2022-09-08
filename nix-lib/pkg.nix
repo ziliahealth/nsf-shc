@@ -10,13 +10,14 @@
     mkdir -p "$bash_completion_dir"
     for e in "''${click_exes[@]}"; do
       click_exe_path="$out/bin/$e"
+      [[ $(type -t patchPythonScript) == function ]] && patchPythonScript "$click_exe_path"
       wrapProgram "$click_exe_path" --prefix PATH ':' "$program_PATH"
       click_complete_env_var_name="_$(echo "$e" | tr "[a-z-]" "[A-Z_]")_COMPLETE"
       # TODO: For some reason, running this return a non zero (1) status code. This might
       # be a click library bug. Fill one if so.
-      env "''${click_complete_env_var_name}=source_bash" "$click_exe_path" > "$bash_completion_dir/$e" || true
+      env "''${click_complete_env_var_name}=bash_source" "$click_exe_path" > "$bash_completion_dir/$e" || true
       # Because of the above, check that we got some completion code in the file.
-      cat "$bash_completion_dir/$e" | grep "$e" > /dev/null
+      cat "$bash_completion_dir/$e" | grep "$click_complete_env_var_name" > /dev/null || { echo "Bash completion not installed for $e" && exit 1; }
     done
   '';
 
@@ -34,10 +35,10 @@
     mkdir -p "$bash_completion_dir"
     for e in "''${click_exes[@]}"; do
       click_complete_env_var_name="_$(echo "$e" | tr "[a-z-]" "[A-Z_]")_COMPLETE"
-      env "''${click_complete_env_var_name}=source_bash" "$e" > "$bash_completion_dir/$e" \
+      env "''${click_complete_env_var_name}=bash_source" "$e" > "$bash_completion_dir/$e" \
         || true
       # Because of the above, check that we got some completion code in the file.
-      cat "$bash_completion_dir/$e" | grep "$e" > /dev/null
+      cat "$bash_completion_dir/$e" | grep "$click_complete_env_var_name" > /dev/null
     done
 
     prefix_path "XDG_DATA_DIRS" "$bash_compl_tmp_root_dir/share"

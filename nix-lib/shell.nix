@@ -15,10 +15,10 @@
     mkdir -p "$bash_completion_dir"
     for e in "''${click_exes[@]}"; do
       click_complete_env_var_name="_$(echo "$e" | tr "[a-z-]" "[A-Z_]")_COMPLETE"
-      env "''${click_complete_env_var_name}=source_bash" "$e" > "$bash_completion_dir/$e" \
+      env "''${click_complete_env_var_name}=bash_source" "$e" > "$bash_completion_dir/$e" \
         || true
       # Because of the above, check that we got some completion code in the file.
-      cat "$bash_completion_dir/$e" | grep "$e" > /dev/null
+      cat "$bash_completion_dir/$e" | grep "$click_complete_env_var_name" > /dev/null
     done
 
     __prefix_path() {
