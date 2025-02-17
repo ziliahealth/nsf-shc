@@ -1,8 +1,8 @@
 {}:
 let
   nixpkgs = rec {
-    rev = "refs/tags/22.05";
-    sha256 = "0d643wp3l77hv2pmg2fi7vyxn4rwy0iyr8djcw1h5x72315ck9ik";
+    rev = "030ba1976b7c0e1a67d9716b17308ccdab5b381e"; # 24.11 - 2025-02-04
+    sha256 = "14rpk53mia7j0hr4yaf5m3b2d4lzjx8qi2rszxjhqq00pxzzr64w";
     url = "https://github.com/NixOS/nixpkgs/archive/${rev}.tar.gz";
     src = builtins.fetchTarball {
       inherit url;
